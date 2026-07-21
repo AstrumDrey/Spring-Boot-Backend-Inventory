@@ -8,15 +8,15 @@ Sistema backend para administrar un inventario de productos con categorización 
 
 ## Stack tecnológico
 
-| Tecnología | Versión |
-|---|---|
-| Java | 21 |
-| Spring Boot | 4.1.0 |
-| Spring Data JPA / Hibernate | — |
-| Spring Validation | — |
-| PostgreSQL | — |
-| Lombok | — |
-| Maven | — |
+| Tecnología                  | Versión |
+| --------------------------- | ------- |
+| Java                        | 21      |
+| Spring Boot                 | 4.1.0   |
+| Spring Data JPA / Hibernate | —       |
+| Spring Validation           | —       |
+| PostgreSQL                  | —       |
+| Lombok                      | —       |
+| Maven                       | —       |
 
 ## Estructura del proyecto
 
@@ -54,41 +54,43 @@ src/main/java/com/andrey/inventario/proyecto/
 
 ### Productos — `/api/v1/products`
 
-| Método | Ruta | Descripción | Parámetros query |
-|---|---|---|---|
-| `GET` | `/api/v1/products` | Listar productos paginados con filtros | `name`, `categoryId`, `minPrice`, `maxPrice`, `minStock`, `maxStock`, `page`, `size`, `sort` |
-| `GET` | `/api/v1/products/{id}` | Obtener producto por ID | — |
-| `GET` | `/api/v1/products/low-stock` | Productos con stock ≤ stockMin | `page`, `size` |
-| `GET` | `/api/v1/products/low-stock/count` | Conteo de productos con stock bajo | — |
-| `POST` | `/api/v1/products` | Crear producto | Body: `ProductRequest` |
-| `PUT` | `/api/v1/products/{id}` | Actualizar producto | Body: `ProductRequest` |
-| `DELETE` | `/api/v1/products/{id}` | Eliminar producto | — |
+| Método   | Ruta                               | Descripción                            | Parámetros query                                                                             |
+| -------- | ---------------------------------- | -------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `GET`    | `/api/v1/products`                 | Listar productos paginados con filtros | `name`, `categoryId`, `minPrice`, `maxPrice`, `minStock`, `maxStock`, `page`, `size`, `sort` |
+| `GET`    | `/api/v1/products/{id}`            | Obtener producto por ID                | —                                                                                            |
+| `GET`    | `/api/v1/products/low-stock`       | Productos con stock ≤ stockMin         | `page`, `size`                                                                               |
+| `GET`    | `/api/v1/products/low-stock/count` | Conteo de productos con stock bajo     | —                                                                                            |
+| `POST`   | `/api/v1/products`                 | Crear producto                         | Body: `ProductRequest`                                                                       |
+| `PUT`    | `/api/v1/products/{id}`            | Actualizar producto                    | Body: `ProductRequest`                                                                       |
+| `DELETE` | `/api/v1/products/{id}`            | Eliminar producto                      | —                                                                                            |
 
 ### Categorías — `/api/v1/categories`
 
-| Método | Ruta | Descripción |
-|---|---|---|
-| `GET` | `/api/v1/categories` | Listar todas las categorías |
-| `GET` | `/api/v1/categories/{id}` | Obtener categoría por ID |
-| `POST` | `/api/v1/categories` | Crear categoría |
-| `PUT` | `/api/v1/categories/{id}` | Actualizar categoría |
-| `DELETE` | `/api/v1/categories/{id}` | Eliminar categoría |
+| Método   | Ruta                      | Descripción                 |
+| -------- | ------------------------- | --------------------------- |
+| `GET`    | `/api/v1/categories`      | Listar todas las categorías |
+| `GET`    | `/api/v1/categories/{id}` | Obtener categoría por ID    |
+| `POST`   | `/api/v1/categories`      | Crear categoría             |
+| `PUT`    | `/api/v1/categories/{id}` | Actualizar categoría        |
+| `DELETE` | `/api/v1/categories/{id}` | Eliminar categoría          |
 
 ## DTOs
 
 ### ProductRequest
+
 ```json
 {
   "name": "Laptop Gaming",
   "description": "Laptop con RTX 4070",
   "stock": 10,
   "stockMin": 3,
-  "price": 1200.00,
+  "price": 1200.0,
   "categoryIds": [1, 2, 3]
 }
 ```
 
 ### ProductResponse
+
 ```json
 {
   "id": 1,
@@ -96,34 +98,34 @@ src/main/java/com/andrey/inventario/proyecto/
   "description": "Laptop con RTX 4070",
   "stock": 10,
   "stockMin": 3,
-  "price": 1200.00,
+  "price": 1200.0,
   "createdAt": "2026-07-09T12:00:00",
-  "categories": [
-    { "id": 1, "name": "Electrónica", "productCount": 0 }
-  ]
+  "categories": [{ "id": 1, "name": "Electrónica", "productCount": 0 }]
 }
 ```
 
 ### CategoryRequest
+
 ```json
 { "name": "Electrónica" }
 ```
 
 ### CategoryResponse
+
 ```json
 { "id": 1, "name": "Electrónica", "productCount": 5 }
 ```
 
 ## Códigos de respuesta
 
-| Código | Significado |
-|---|---|
-| `200 OK` | Operación exitosa (GET, PUT) |
-| `201 Created` | Recurso creado (POST) |
-| `204 No Content` | Recurso eliminado (DELETE) |
-| `400 Bad Request` | Error de validación |
-| `404 Not Found` | Recurso no encontrado |
-| `409 Conflict` | Recurso duplicado |
+| Código            | Significado                  |
+| ----------------- | ---------------------------- |
+| `200 OK`          | Operación exitosa (GET, PUT) |
+| `201 Created`     | Recurso creado (POST)        |
+| `204 No Content`  | Recurso eliminado (DELETE)   |
+| `400 Bad Request` | Error de validación          |
+| `404 Not Found`   | Recurso no encontrado        |
+| `409 Conflict`    | Recurso duplicado            |
 
 ## Cómo ejecutar
 
@@ -143,7 +145,9 @@ Toda la configuración está en `src/main/resources/application.properties`:
 
 ```properties
 spring.application.name=inventario.proyecto
-spring.datasource.url=${DATABASE_URL}
+spring.datasource.url=${DATA_BASE_URL}
+spring.datasource.username=${DATA_BASE_USERNAME}
+spring.datasource.password=${DATA_BASE_PASSWORD}
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=false
