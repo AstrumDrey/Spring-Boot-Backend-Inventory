@@ -17,13 +17,3 @@ public record ProductRequest(
                 @NotNull @Positive BigDecimal price,
                 @NotNull @NotEmpty Set<Long> categoryIds) {
 }
-
-/*
- * Los records en Java son clases inmutables que reemplazan el boilerplate de
- * una clase normal.
- * Es decir, no es necesario crear métodos get/set
- * constructores, toString, etc.
- *
- * Pero el inconveniente es que los datos son inmutables
- * por tanto no cambian (todos los campos se vuelven "final")
- */

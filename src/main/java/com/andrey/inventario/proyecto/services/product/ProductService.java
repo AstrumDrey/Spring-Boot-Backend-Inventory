@@ -26,7 +26,6 @@ public class ProductService {
     private final CategoryRepository categoryRepository;
     private final ProductMapper productMapper;
 
-    // GET with filters
     @Transactional(readOnly = true)
     public Page<ProductResponse> findAll(
             String name,
@@ -49,7 +48,6 @@ public class ProductService {
 
     }
 
-    // GET by ID.
     @Transactional(readOnly = true)
     public ProductResponse findById(Long id) {
         var product = productRepository.findById(id)
@@ -57,8 +55,6 @@ public class ProductService {
 
         return productMapper.EntityToDto(product);
     }
-
-    // Create Product
 
     @Transactional
     public ProductResponse createProduct(ProductRequest request) {
@@ -125,35 +121,3 @@ public class ProductService {
     }
 }
 
-/*
- * @Transactional
- *
- * Marca un método para que se ejecute dentro de una transacción
- * de base de datos. Sin ella, cada operación con la BD se
- * autocommittea inmediatamente.
- *
- * ¿Cómo funciona?
- * - Spring abre una transacción ANTES de ejecutar el método
- * - Todas las operaciones (save, delete, findAllById) se
- * ejecutan dentro de esa misma transacción
- * - Si el método termina bien → COMMIT (se guarda todo)
- * - Si el método lanza una excepción → ROLLBACK (se deshace todo)
- *
- * ¿Por qué es necesaria?
- * - Sin @Transactional, cada save() es una transacción independiente.
- * Si guardas un producto pero falla algo después, el producto
- * ya quedó guardado (datos a medias).
- * - Con @Transactional, si falla algo, todo se deshace.
- *
- * readOnly = true
- * - Para métodos que solo LEEN (findAll, findById)
- * - Optimiza: JPA no necesita trackear cambios, no hace flush
- * - Se puede omitir en lecturas porque JpaRepository ya maneja
- * transacciones internamente, pero es buena práctica marcarlo
- *
- * ¿Dónde usarlo?
- * - En create, update, delete → @Transactional (escritura)
- * - En findAll, findById → @Transactional(readOnly = true)
- * - En métodos que hacen varias operaciones y quieres que
- * sean atómicas (todo o nada)
- */

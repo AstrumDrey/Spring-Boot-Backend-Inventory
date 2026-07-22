@@ -27,50 +27,11 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/products")
-@RequiredArgsConstructor // Activa inyección por constructor (mejor práctica)
+@RequiredArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
 
-    /*
-     * @RequestParam vincula parámetros de la URL (query string) a los parámetros
-     * del método del controlador.
-     *
-     * Diferencias con otras anotaciones:
-     *
-     * @RequestBody → Toma los datos del CUERPO de la petición (POST/PUT)
-     * Ej: { "name": "Laptop", "price": 1200 }
-     *
-     * @PathVariable → Toma un valor de la RUTA de la URL
-     * Ej: /api/v1/products/{id} → @PathVariable Long id
-     *
-     * @RequestParam → Toma valores de la QUERY STRING (después del ?)
-     * Ej: /api/v1/products?name=Laptop&categoryId=3
-     *
-     * Nuestro endpoint actual con ejemplos de uso:
-     *
-     * 1. SIN FILTROS (solo paginación):
-     * GET /api/v1/products?page=0&size=10
-     *
-     * 2. FILTRANDO POR NOMBRE:
-     * GET /api/v1/products?name=laptop&page=0&size=10
-     *
-     * 3. FILTRANDO POR NOMBRE + CATEGORÍA:
-     * GET /api/v1/products?name=laptop&categoryId=3&page=0&size=10
-     *
-     * 4. FILTRANDO POR RANGO DE PRECIO:
-     * GET /api/v1/products?minPrice=100&maxPrice=2000&page=0&size=10
-     *
-     * 5. FILTRANDO POR STOCK MÍNIMO:
-     * GET /api/v1/products?minStock=5&page=0&size=10
-     *
-     * 6. CON ORDENACIÓN:
-     * GET /api/v1/products?name=laptop&page=0&size=10&sort=price,desc
-     *
-     * @RequestParam(required = false) → el parámetro es opcional
-     * Si no se envía, el valor del parámetro Java es null
-     * y la query JPQL lo ignora con "IS NULL"
-     */
 
     @GetMapping
     public ResponseEntity<Page<ProductResponse>> getAllProducts(
@@ -85,7 +46,6 @@ public class ProductController {
     ) {
         return ResponseEntity.ok(
                 productService.findAll(name, categoryId, minPrice, maxPrice, minStock, maxStock, pageable));
-        // ResponseEntity.ok equivale => ResponseEntity.status().body()
     }
 
     @GetMapping("/low-stock")

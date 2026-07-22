@@ -23,7 +23,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-// JPA needs a constructor without arguments.
+
 public class Category {
 
     @Id
@@ -37,23 +37,5 @@ public class Category {
     @ManyToMany(mappedBy = "categories")
     private Set<Product> products = new HashSet<>();
 
-    /*
-     *
-     * mappedBy: Le dice a JPA "la otra clase ya configuró la relación"
-     *
-     * - Product tiene configurado @ManyToMany con @JoinTable (es la dueña)
-     * - Category pone mappedBy.
-     *
-     * Si no pones mappedBy, JPA crea dos tablas intermedias.
-     *
-     * Da igual quien sea el dueño, lo importante es que una de las clases
-     * tenga @JoinTable y el otro mappedBy.
-     */
 
-    /*
-     * Sí, es una buena práctica para entidades JPA. Es más, muchos expertos
-     * recomiendan no usar @Data en absoluto en entidades, precisamente por estos
-     * problemas. La solución que te di (usar @Getter @Setter y definir
-     * equals/hashCode basados en el ID) es estándar.
-     */
 }
