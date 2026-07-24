@@ -11,8 +11,3 @@ target/
 .env.local
 .env.production
 README.md
-COMENTARIOS-PROYECTO.TXT
-endpointsTesting.txt
-import.sql
-Sugerencias.txt
-Qué es LazyLoadingSpringBoot.txt
